@@ -10,4 +10,29 @@
 	padding: 0 2rem;
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
+	.logo {
+		a {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			color: var(--gray-100);
+		}
+	}
+	.navigation {
+		display: flex;
+		gap: 0.5rem;
+		a {
+			color: var(--gray-300);
+			transition: 0.3s ease;
+			padding: 1rem 0.5rem;
+			&:hover {
+				color: var(--gray-100);
+			}
+			&.active {
+				color: var(--gray-100);
+				font-weight: bold;
+			}
+		}
+	}
 }
