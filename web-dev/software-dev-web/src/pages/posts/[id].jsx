@@ -1,37 +1,44 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-
+import { GetServerSideProps, GetStaticProps } from 'next';
 import styles from './styles.module.scss';
 
-function Post() {
-	const { query } = useRouter();
-	const [response, setResponse] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
-	const idToNumber = Number(query.id);
-
-	useEffect(() => {
-		(async function getData() {
-			await fetch('https://jsonplaceholder.typicode.com/comments')
-				.then((response) => response.json())
-				.then((json) => setResponse(json));
-			console.log(response[0]);
-			setIsLoading(false);
-		})();
-	}, []);
-
+export default function Post({ post }) {
 	return (
 		<div className={styles.container}>
 			<div className={styles.postHeader}>
-				<h1>{isLoading ? 'Loading...' : response[idToNumber].name}</h1>
-				<p className={styles.author}>
-					{isLoading ? 'Loading...' : response[idToNumber].email}
-				</p>
+				<h1>{post.name}</h1>
+				<p className={styles.author}>{post.email}</p>
 			</div>
 			<div className={styles.postBody}>
-				<p>{isLoading ? 'Loading...' : response[idToNumber].body}</p>
+				<p>{post.body}</p>
+				<p>{post.body}</p>
+				<p>{post.body}</p>
+				<p>{post.body}</p>
+				<p>{post.body}</p>
 			</div>
 		</div>
 	);
 }
 
-export default Post;
+export async function getStaticPaths() {
+	return {
+		paths: [
+			{ params: { id: '1' } },
+			{ params: { id: '2' } },
+			{ params: { id: '3' } },
+		],
+		fallback: false,
+	};
+}
+
+export async function getStaticProps({ params }) {
+	const response = await fetch(
+		`https://jsonplaceholder.typicode.com/comments/${params.id}`
+	);
+	const post = await response.json();
+	return {
+		props: {
+			post,
+		},
+		revalidate: 5,
+	};
+}
