@@ -1,16 +1,8 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import { useFonts, Inter_500Medium } from '@expo-google-fonts/inter';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 
 export default function Header() {
-	let [fontsLoaded] = useFonts({
-		Inter_500Medium,
-	});
-
-	if (!fontsLoaded) {
-		return <Text>Loading</Text>;
-	}
 	return (
 		<>
 			<StatusBar style="auto" />
